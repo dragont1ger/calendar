@@ -1,0 +1,58 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: calendar
+
+  output:
+    ansi:
+      enabled: always
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost
+    username: DragonTiger
+    password: 1234
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 1000
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: dragont1ger@naver.com
+    password: tyalejajsl408
+    properties:
+      debug: true
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: smtp.naver.com
+    protocol: smtps
+
+  security:
+    user:
+      name: dragont1ger
+      password: 1234
+
+logging:
+  level:
+    org:
+      hibernate:
+        sql: debug
