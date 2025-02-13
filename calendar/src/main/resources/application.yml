@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8080
 spring:
   application:
     name: calendar
@@ -17,7 +17,7 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost
-    username: DragonTiger
+    username: dydqja01
     password: 1234
 
   jpa:

@@ -100,18 +100,7 @@
                   checked
                 />
                 <label class="btn btn-outline-danger" for="danger"
-                  >급한 일</label
-                >
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="work"
-                  id="warning"
-                  value="#ffc107"
-                  autocomplete="off"
-                />
-                <label class="btn btn-outline-warning" for="warning"
-                  >조금 급한 일</label
+                  >중요 일정</label
                 >
                 <input
                   type="radio"
@@ -122,18 +111,7 @@
                   autocomplete="off"
                 />
                 <label class="btn btn-outline-primary" for="primary"
-                  >덜 급한 일</label
-                >
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="work"
-                  id="success"
-                  value="#198754"
-                  autocomplete="off"
-                />
-                <label class="btn btn-outline-success" for="success"
-                  >나중에 해도 될일</label
+                  >일반 일정</label
                 >
               </div>
               <div class="mt-3">
@@ -151,7 +129,6 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Understood</button>
           </div>
         </div>
       </div>
@@ -165,7 +142,7 @@
       const calendarForm = document.forms["calendar-form"];
       let work = null;
       document.addEventListener("DOMContentLoaded", function () {
-        // 캘런디러르 표시할 HTML 요소 가져오기
+        // 캘린더를 표시할 HTML 요소 가져오기
         const calendarEl = document.querySelector("#calendar");
 
         // FullCalendar 인스턴스 생성
@@ -183,7 +160,7 @@
             console.log(e);
             calendarModal.show(); // 일정 추가 모달 표시
           },
-          // 일정 변경 이벤트 (드ㅐㄹ그&드롭 변경 시 실행)
+          // 일정 변경 이벤트 (드래그&드롭 변경 시 실행)
           eventChange: function (e) {
             console.log(e);
 

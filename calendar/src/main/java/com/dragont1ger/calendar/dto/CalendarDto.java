@@ -1,6 +1,5 @@
 package com.dragont1ger.calendar.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
