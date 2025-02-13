@@ -158,32 +158,42 @@
     </div>
 
     <script>
+      // 일정 추가 모달
       const calendarModal = new bootstrap.Modal("#calendar-modal");
+      // 일정 추가 버튼, 폼 요소 가져오기
       const btnInsert = document.querySelector("#btn-insert");
       const calendarForm = document.forms["calendar-form"];
       let work = null;
       document.addEventListener("DOMContentLoaded", function () {
+        // 캘런디러르 표시할 HTML 요소 가져오기
         const calendarEl = document.querySelector("#calendar");
+
+        // FullCalendar 인스턴스 생성
         const calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: "dayGridMonth",
-          selectable: true,
-          editable: true,
+          initialView: "dayGridMonth", // 기본 월간 보기 설정
+          selectable: true, // 날짜 선택 가능
+          editable: true, // 이벤트 드래그&드롭 가능
           dateClick: function () {
+            // 날짜 클릭
             console.log("날짜 클릭");
           },
+          // 날짜 범위 선택 이벤트
           select: function (e) {
             console.log("select");
             console.log(e);
-            calendarModal.show();
+            calendarModal.show(); // 일정 추가 모달 표시
           },
+          // 일정 변경 이벤트 (드ㅐㄹ그&드롭 변경 시 실행)
           eventChange: function (e) {
             console.log(e);
+
+            // 변경된 이벤트 정보를 서버로 전송
             const sendData = {
               title: e.event.title,
               start: e.event.startStr,
               end: e.event.endStr,
-              id: e.event.id,
-              allDay: e.event.allDay,
+              id: e.event.id, // 이벤트 ID
+              allDay: e.event.allDay, // 종일 여부
             };
             fetch("/calendar/change", {
               method: "post",
@@ -203,27 +213,32 @@
                   );
                 }
                 calendarModal.hide();
-                calendar.refetchEvents();
+                calendar.refetchEvents(); // 변경된 이벤트 다시 불러오기
               });
           },
+          // 이벤트 클릭 시 실행
           eventClick: function (e) {
             console.log("이벤트 클릭");
           },
+          // 구글 캘린더 API를 활용한 공휴일 표시
           googleCalendarApiKey: "",
           locale: "ko",
           eventSources: [
             {
+              // 한국 공휴일 가져오기
               googleCalendarId:
                 "ko.south_korea.official#holiday@group.v.calendar.google.com",
               backgroundColor: "#ff0000",
               borderColor: "#ff0000",
             },
             {
+              // 서버에서 사용자 일정 가져오기
               events: function (e, successCallback, failCallback) {
                 fetch("/calendar/list")
                   .then((response) => response.json())
                   .then((json) => {
                     console.log(json);
+                    // 각 이벤트에 색상 지정
                     const changedJson = json.map((item) => ({
                       ...item,
                       backgroundColor: item.work,
@@ -239,8 +254,9 @@
             },
           ],
         });
-        calendar.render();
+        calendar.render(); // 캘린더 렌더링
 
+        // 일정 추가 버튼 클릭 이벤트
         btnInsert.addEventListener("click", (e) => {
           e.preventDefault();
           //새로입력할때 값 지우기....
@@ -256,6 +272,7 @@
             endTime = calendarForm.endTime.value;
           }
 
+          // 서버로 전송할 데이터 구성
           const sendData = {
             title: calendarForm.title.value,
             start: calendarForm.start.value + " " + startTime,
@@ -264,6 +281,8 @@
             work: document.querySelector('input[name="work"]:checked')?.value,
           };
           console.log(sendData);
+
+          // 서버로 일정 추가 요청 보내기
           fetch("/calendar/insert", {
             method: "post",
             headers: {
